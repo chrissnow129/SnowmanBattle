@@ -1,0 +1,19 @@
+body {
+  background-image: url(images/2EjnzLH.jpg);
+}
+
+h1 {
+  color: skyblue;
+  text-align: center;
+  font-size: 50px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.intromod {
+background-color: white;
+justify-content: center;
+display: flex;
+width: 50%;
+margin: 0 auto;
+margin-top: 200px;
+}
