@@ -16,3 +16,25 @@ width: 50%;
 margin: 0 auto;
 margin-top: 200px;
 }
+
+#snow-hench{
+  height: 200px;
+  margin-left: 80%;
+  margin-top: 500px;
+  display: none;
+  position: relative;
+}
+
+#snow-boss{
+  height: 200px;
+  margin-left: 80%;
+  margin-top: 430px;
+  display: none;
+  position: relative;
+}
+
+#traveler{
+  height: 250px;
+  margin-top: 220px;
+  display: none;
+}
