@@ -11,8 +11,7 @@ h1 {
 
 .intromod {
 background-color: white;
-justify-content: center;
-display: flex;
+text-align: center;
 width: 50%;
 margin: 0 auto;
 margin-top: 200px;
