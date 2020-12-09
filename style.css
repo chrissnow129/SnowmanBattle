@@ -20,9 +20,10 @@ margin-top: 200px;
 #snow-hench{
   height: 200px;
   margin-left: 80%;
-  margin-top: 500px;
+  margin-top: 40%;
+  margin-bottom: -10%;
   display: none;
-  position: relative;
+  position: fixed;
 }
 
 #snow-boss{
@@ -34,7 +35,7 @@ margin-top: 200px;
 }
 
 #traveler{
-  height: 250px;
-  margin-top: 220px;
+  height: 350px;
+  margin-top: 500px;
   display: none;
 }

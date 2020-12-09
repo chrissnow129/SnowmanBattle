@@ -16,10 +16,13 @@ $(() => {
     .appendTo(introMod);
 
   const snowhench = $("#snow-hench");
+  const brody = $('#traveler')
 
   const startgame = () => {
     introMod.hide();
     snowhench.css("display", "block");
+    brody.css('display', 'block');
+    const lantBut = $('<button>').attr('id', 'lantbut').text('Use a Warm Lantern').appendTo('body')
   };
 
   class Snowman {
@@ -34,16 +37,24 @@ $(() => {
   }
 
   class Traveler {
-    constructor(name, health, attack) {
+    constructor(name, health) {
       this.name = name;
       this.health = 20;
-      this.attack = 3;
+      this.tools = {
+        warmLantern: 2,
+        icePick: 4
+      }
+    }
+    lanternMelt(){
+      Snowman.health -= this.tools.warmLantern
+      console.log(`You have melted a little of the Frostbite leaving him at ${snowman.health}`)
     }
   }
 
-  const hero = new Traveler (name, health, attack);
+  const hero = new Traveler ('Brody');
 
   console.log(hero);
 
   startbut.on("click", startgame);
+  $('#lantbut').on('click',this.tools.warmLantern())
 });
