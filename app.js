@@ -22,12 +22,28 @@ $(() => {
     snowhench.css("display", "block");
   };
 
-  class Snowman{
-      constructor(health, attack) {
-          this.health = 10
-          this.attack = attack
-      }
+  class Snowman {
+    constructor(name, health, attack) {
+      this.name = name;
+      this.health = 10;
+      this.attack = attack;
+    }
+    freezeBlast() {}
+
+    icicleGun() {}
   }
+
+  class Traveler {
+    constructor(name, health, attack) {
+      this.name = name;
+      this.health = 20;
+      this.attack = 3;
+    }
+  }
+
+  const hero = new Traveler (name, health, attack);
+
+  console.log(hero);
 
   startbut.on("click", startgame);
 });
