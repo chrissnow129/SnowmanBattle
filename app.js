@@ -16,14 +16,7 @@ $(() => {
     .appendTo(introMod);
 
   const snowhench = $("#snow-hench");
-  const brody = $('#traveler')
-
-  const startgame = () => {
-    introMod.hide();
-    snowhench.css("display", "block");
-    brody.css('display', 'block');
-    const lantBut = $('<button>').attr('id', 'lantbut').text('Use a Warm Lantern').appendTo('body')
-  };
+  const brody = $("#traveler");
 
   class Snowman {
     constructor(name, health, attack) {
@@ -36,25 +29,39 @@ $(() => {
     icicleGun() {}
   }
 
+  const enemy = new Snowman("Frostbite", 3);
+
   class Traveler {
     constructor(name, health) {
       this.name = name;
       this.health = 20;
       this.tools = {
         warmLantern: 2,
-        icePick: 4
-      }
+        icePick: 4,
+      };
     }
-    lanternMelt(){
-      Snowman.health -= this.tools.warmLantern
-      console.log(`You have melted a little of the Frostbite leaving him at ${snowman.health}`)
+    lanternMelt() {
+      enemy.health -= this.tools.warmLantern;
+      console.log(
+        `You have melted a little of the Frostbite leaving him at ${enemy.health}`
+      );
     }
   }
 
-  const hero = new Traveler ('Brody');
+  const hero = new Traveler("Brody");
 
   console.log(hero);
 
+  const startgame = () => {
+    introMod.hide();
+    snowhench.css("display", "block");
+    brody.css("display", "block");
+    const lantBut = $("<button>")
+      .attr("id", "lantbut")
+      .text("Use a Warm Lantern")
+      .appendTo("body");
+    lantBut.on("click", hero.lanternMelt());
+  };
+
   startbut.on("click", startgame);
-  $('#lantbut').on('click',this.tools.warmLantern())
 });
