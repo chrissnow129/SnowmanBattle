@@ -18,18 +18,52 @@ $(() => {
   const snowhench = $("#snow-hench");
   const brody = $("#traveler");
 
+  const startgame = () => {
+    introMod.hide();
+    snowhench.css("display", "block");
+    brody.css("display", "block");
+    lantBut.css("display", "block");
+  };
+
+  const lantBut = $("<button>")
+    .attr("id", "lantbut")
+    .text("Use a Warm Lantern")
+    .appendTo("body");
+
   class Snowman {
-    constructor(name, health, attack) {
+    constructor(name, health, attacks) {
       this.name = name;
       this.health = 10;
-      this.attack = attack;
+      this.attacks = {
+        freezeBlast: 2,
+        icicleGun: 4,
+      };
     }
-    freezeBlast() {}
+    freezeBlast() {
+      hero.health -= this.attacks.freezeBlast;
+      console.log(
+        `The Frostbite hit you with an icy shockwave and now you have ${hero.health} HP`
+      );
+    }
 
-    icicleGun() {}
+    icicleGun() {
+      hero.health -= this.attacks.icicleGun;
+      console.log(`You got hit with an icicle and now have ${hero.health} HP`);
+    }
   }
 
-  const enemy = new Snowman("Frostbite", 3);
+  const Frostbite = new Snowman("Frostbite");
+
+  class SnowBoss extends Snowman {
+    constructor(regen, name, health, attacks) {
+      super(name, health, attacks);
+      this.name = name;
+      this.health = 15;
+      this.regen = 2;
+    }
+  }
+
+  const CaptainIce = new SnowBoss("Captain Shivers");
 
   class Traveler {
     constructor(name, health) {
@@ -40,28 +74,33 @@ $(() => {
         icePick: 4,
       };
     }
-    lanternMelt() {
+    lanternMelt(enemy) {
       enemy.health -= this.tools.warmLantern;
       console.log(
         `You have melted a little of the Frostbite leaving him at ${enemy.health}`
       );
     }
-  }
-
-  const hero = new Traveler("Brody");
-
-  console.log(hero);
-
-  const startgame = () => {
-    introMod.hide();
-    snowhench.css("display", "block");
-    brody.css("display", "block");
-    const lantBut = $("<button>")
-      .attr("id", "lantbut")
-      .text("Use a Warm Lantern")
-      .appendTo("body");
-    lantBut.on("click", hero.lanternMelt());
   };
 
+  const loseMod = () => {
+    $("<div>").addClass("youLost").appendTo("body");
+  };
+
+  const hero = new Traveler("Brody");
+  console.log(hero);
+
+  if (hero.health <= 0) {
+    loseMod();
+  }
+
+  let gameLevel = 1;
+
   startbut.on("click", startgame);
+  lantBut.on("click", () => {
+    if (gameLevel = 1) {
+      hero.lanternMelt(Frostbite);
+    } else {
+      hero.lanternMelt(CaptainIce);
+    }
+  });
 });
