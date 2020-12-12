@@ -23,10 +23,12 @@ $(() => {
 
   const startgame = () => {
     introMod.hide();
-    snowhench.css("display", "block");
+    snowboss.css("display", "block");
     brody.css("display", "block");
     lantBtn.css("display", "block");
     pickBtn.css("display", "block");
+    travelerName.css("display", "block");
+    snowHenchName.css("display", "block");
   };
 
   const lantBtn = $("<button>")
@@ -39,17 +41,23 @@ $(() => {
     .text("Throw an Ice Pick")
     .appendTo(".traveler-card");
 
+    const travelerName = $("<h2>").attr('id', 'brodyName').text('Brody').appendTo('body');
+    const snowHenchName = $("<h2>").attr('id','frostbiteName').text('Frostbite').appendTo('body');
+    const snowBossName = $('<h2>').attr('id','captainShiversName').text('Captain Shivers').appendTo('body');
+
   class Snowman {
     constructor(name, health, attacks) {
       this.name = name;
       this.health = 10;
       this.accuracy = Math.random() * 2;
+      this.choice = Math.random() * 2
       this.attacks = {
         freezeBlast: 2,
         icicleGun: 4,
       };
     }
-    freezeBlast() {
+    choiceAttack() {
+    if (this.choice >= Math.random * 2){
       if (this.accuracy >= Math.random()) {
         hero.health -= this.attacks.freezeBlast;
         console.log(
@@ -58,15 +66,16 @@ $(() => {
       } else {
         console.log("You moved away and missed the shock");
       }
-    }
-
-    icicleGun() {
-      if (this.accuracy >= Math.random()) {
+    } else {
+    if (this.accuracy >= Math.random()) {
         hero.health -= this.attacks.icicleGun;
         console.log(
           `You got hit with an icicle and now have ${hero.health} HP`
         );
+      } else {
+        console.log("You barely missed the icicle");
       }
+    }
     }
   }
 
@@ -91,7 +100,7 @@ $(() => {
   class Traveler {
     constructor(name, health) {
       this.name = name;
-      this.health = 15;
+      this.health = 20;
       this.accuracy = Math.random() * 2;
       this.tools = {
         warmLantern: 2,
@@ -139,12 +148,14 @@ $(() => {
   lantBtn.on("click", () => {
     if (gameLevel === 1) {
       hero.lanternMelt(Frostbite);
-      Frostbite.freezeBlast();
+      Frostbite.choiceAttack();
 
       if (Frostbite.health <= 0) {
         hero.health += 5;
         snowhench.remove();
         snowboss.css("display", "block");
+        snowHenchName.remove();
+        snowBossName.css('display', 'block')
         gameLevel += 1;
       }
 
@@ -156,7 +167,7 @@ $(() => {
       }
     } else {
       hero.lanternMelt(CaptainIce);
-      CaptainIce.freezeBlast();
+      CaptainIce.choiceAttack();
 
       if (CaptainIce.health <= 0) {
         $(".winP").css('display','block');
@@ -175,11 +186,13 @@ $(() => {
     pickBtn.on("click", () => {
       if (gameLevel === 1) {
         hero.pickThrow(Frostbite);
-        Frostbite.freezeBlast();
+        Frostbite.choiceAttack();
 
         if (Frostbite.health <= 0) {
           hero.health += 5;
           snowhench.remove();
+          snowHenchName.remove();
+          snowBossName.css('display', 'block')
           snowboss.css("display", "block");
           gameLevel += 1;
         }
@@ -192,7 +205,7 @@ $(() => {
         }
       } else {
         hero.pickThrow(CaptainIce);
-        CaptainIce.freezeBlast();
+        CaptainIce.choiceAttack();
 
         if (CaptainIce.health <= 0) {
           $(".winP").css('display','block');
