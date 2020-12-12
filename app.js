@@ -18,8 +18,8 @@ $(() => {
     .appendTo(introMod);
 
   const snowhench = $("#snow-hench");
-  const brody = $("#traveler");
-  
+  const brody = $(".traveler-card");
+  const snowboss = $("#snow-boss");
 
   const startgame = () => {
     introMod.hide();
@@ -32,32 +32,41 @@ $(() => {
   const lantBtn = $("<button>")
     .attr("id", "lantBtn")
     .text("Use a Warm Lantern")
-    .appendTo("body");
+    .appendTo(".traveler-card");
 
   const pickBtn = $("<button>")
     .attr("id", "pickBtn")
     .text("Throw an Ice Pick")
-    .appendTo("body");
+    .appendTo(".traveler-card");
 
   class Snowman {
     constructor(name, health, attacks) {
       this.name = name;
       this.health = 10;
+      this.accuracy = Math.random() * 2;
       this.attacks = {
         freezeBlast: 2,
         icicleGun: 4,
       };
     }
     freezeBlast() {
-      hero.health -= this.attacks.freezeBlast;
-      console.log(
-        `The Frostbite hit you with an icy shockwave! Now you have ${hero.health} HP`
-      );
+      if (this.accuracy >= Math.random()) {
+        hero.health -= this.attacks.freezeBlast;
+        console.log(
+          `The Frostbite hit you with an icy shockwave! Now you have ${hero.health} HP`
+        );
+      } else {
+        console.log("You moved away and missed the shock");
+      }
     }
 
     icicleGun() {
-      hero.health -= this.attacks.icicleGun;
-      console.log(`You got hit with an icicle and now have ${hero.health} HP`);
+      if (this.accuracy >= Math.random()) {
+        hero.health -= this.attacks.icicleGun;
+        console.log(
+          `You got hit with an icicle and now have ${hero.health} HP`
+        );
+      }
     }
   }
 
@@ -83,54 +92,62 @@ $(() => {
     constructor(name, health) {
       this.name = name;
       this.health = 15;
+      this.accuracy = Math.random() * 2;
       this.tools = {
         warmLantern: 2,
         icePick: 4,
       };
     }
     lanternMelt(enemy) {
-      enemy.health -= this.tools.warmLantern;
-      console.log(
-        `You have melted a little of ${enemy.name} leaving him at ${enemy.health}`
-      );
+      if (this.accuracy >= Math.random()) {
+        enemy.health -= this.tools.warmLantern;
+        console.log(
+          `You have melted a little of ${enemy.name} leaving him at ${enemy.health}`
+        );
+      } else {
+        console.log(`Your lantern missed ${enemy.name}`);
+      }
     }
     pickThrow(enemy) {
-      enemy.health -= this.tools.icePick;
-      console.log(
-        `You threw one of your ice picks at ${enemy.name} head and left him with ${enemy.health}`
-      );
+      if (this.accuracy >= Math.random()) {
+        enemy.health -= this.tools.icePick;
+        console.log(
+          `You threw one of your ice picks at ${enemy.name} head and left him with ${enemy.health}`
+        );
+      } else {
+        console.log(`Your lantern missed ${enemy.name}`);
+      }
     }
   }
 
   const hero = new Traveler("Brody");
   console.log(hero);
 
-  // const randAttack = [
-  //     Frostbite.freezeBlast()
-  //   ,
-  //     Frostbite.icicleGun()
-  // ];
-
-  const snowAttack = () => {
-    randAttack[Math.round(Math.random) * randAttack.length];
-  };
-
   $("<h2>")
     .addClass("lostP")
-    .text("The Snowmen defeated you and now You've been FROZEN!")
+    .text(`The Snowmen defeated you and now You've been FROZEN!`)
+    .appendTo("body");
+
+  $("<h2>")
+    .addClass("winP")
+    .text("You have defeated both Frostbite & Captain Shivers!")
     .appendTo("body");
 
   let gameLevel = 1;
-
-  if (Frostbite.health <= 0) {
-    gameLevel += 1;
-  }
 
   startbut.on("click", startgame);
   lantBtn.on("click", () => {
     if (gameLevel === 1) {
       hero.lanternMelt(Frostbite);
       Frostbite.freezeBlast();
+
+      if (Frostbite.health <= 0) {
+        hero.health += 5;
+        snowhench.remove();
+        snowboss.css("display", "block");
+        gameLevel += 1;
+      }
+
       if (hero.health <= 0) {
         $(".lostP").css("display", "block");
         brody.remove();
@@ -140,6 +157,14 @@ $(() => {
     } else {
       hero.lanternMelt(CaptainIce);
       CaptainIce.freezeBlast();
+
+      if (CaptainIce.health <= 0) {
+        $(".winP").css('display','block');
+        snowboss.remove();
+        lantBtn.remove();
+        pickBtn.remove();
+      }
+
       if (hero.health <= 0) {
         $(".lostP").css("display", "block");
         brody.remove();
@@ -151,6 +176,14 @@ $(() => {
       if (gameLevel === 1) {
         hero.pickThrow(Frostbite);
         Frostbite.freezeBlast();
+
+        if (Frostbite.health <= 0) {
+          hero.health += 5;
+          snowhench.remove();
+          snowboss.css("display", "block");
+          gameLevel += 1;
+        }
+
         if (hero.health <= 0) {
           $(".lostP").css("display", "block");
           brody.remove();
@@ -160,6 +193,14 @@ $(() => {
       } else {
         hero.pickThrow(CaptainIce);
         CaptainIce.freezeBlast();
+
+        if (CaptainIce.health <= 0) {
+          $(".winP").css('display','block');
+          snowboss.remove();
+          lantBtn.remove();
+          pickBtn.remove();
+        }
+
         if (hero.health <= 0) {
           $(".lostP").css("display", "block");
           brody.remove();

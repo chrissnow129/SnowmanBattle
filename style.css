@@ -1,5 +1,6 @@
 body {
   background-image: url(images/2EjnzLH.jpg);
+  height: 100vh;
 }
 
 h1 {
@@ -18,8 +19,8 @@ h1 {
 }
 
 #snow-hench {
-  height: 200px;
-  margin-left: 80%;
+  height: 270px;
+  margin-left: 75%;
   margin-top: 40%;
   margin-bottom: -10%;
   display: none;
@@ -27,17 +28,23 @@ h1 {
 }
 
 #snow-boss {
-  height: 200px;
+  height: 300px;
+  position: absolute;
   margin-left: 80%;
-  margin-top: 430px;
+  margin-top: 500px;
   display: none;
-  position: relative;
+}
+
+.traveler-card {
+  /* border: solid 100px red; */
+  height: 350px;
+  margin-top: 500px;
+  display: none;
+  position: absolute;
 }
 
 #traveler {
   height: 350px;
-  margin-top: 500px;
-  display: none;
 }
 
 #lantBtn {
@@ -49,12 +56,25 @@ h1 {
 }
 
 .lostP {
-  color: green;
-  font-size: 30px;
-  background-color: white;
-  display: none;
-  width: 65%;
-  height: 50px;
+  background-color: rgb(255, 255, 255);
   text-align: center;
-  margin: 200px 200px
+  width: 50%;
+  margin-left: 350px;
+  font-size: 40px;
+  font-family: "Nunito", sans-serif;
+  color: rgb(247, 13, 13);
+  border-radius: 10px;
+  display: none;
+}
+
+.winP{
+  background-color: rgb(154, 216, 237);
+  text-align: center;
+  width: 50%;
+  margin-left: 350px;
+  font-size: 40px;
+  font-family: "Nunito", sans-serif;
+  color: white;
+  border-radius: 10px;
+  display: none;
 }
